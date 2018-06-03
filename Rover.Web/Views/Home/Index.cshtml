@@ -1,0 +1,60 @@
+﻿@model Rover.Model.RoverOutputViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-md-9 instructions">
+        <h4>Instructions</h4>
+        <p>
+            The first line of input is the upper-right coordinates of the plateau
+
+            Each Rover has two lines of input;Rover's position and instructions
+        </p>
+        <p>
+            Example :
+            <ul>
+                <li>5 5   (Upper right coordinates)</li>
+                <li>1 2 N (Initial position of the Rover)</li>
+                <li>LMLMLMLMM (instruction to explore the  plateau - allowed values are L,R and M)</li>
+            </ul>
+        </p>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-6">
+        <form id="RoverInput" method="post" onsubmit="return validateInput();">
+            <div class="roundcorner">
+                <p>INPUT</p>
+
+                @Html.TextArea("RoverInputModel", new { rows = 5, columns = 20 })
+                <div><input type="submit" value="Execute" id="btnExecute" class="form-submit-button"/></div>
+                @*<div>
+                        <button name="Execute" class="btn-primary" id="btnExecute" data-submiturl="/Home/_RoverOutput">Execute</button>
+                    </div>*@
+                <span id="errorMessage" class="has-error">
+                @if (Model != null && !String.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    @Model.ErrorMessage
+                }
+                </span>
+            </div>
+            <div id="Roveroutput" class="roundcorner">
+                <p>OUTPUT</p>
+                @if (Model != null && String.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    foreach (var output in Model.RoverOutputs)
+                    {
+                        <p>@output.PositionX @output.PositionY @output.Heading</p>
+                    }
+                }
+                else
+                {
+
+                }
+            </div>
+        </form>
+    </div>
+
+</div>
